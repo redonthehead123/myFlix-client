@@ -8,15 +8,15 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    fetch("https://localhost:8080")
+    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.docs.map((doc) => {
+        const moviesFromApi = data.map((doc) => {
           return {
-            id: doc.key,
-            title: doc.title,
-            image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-            author: doc.author_name?.[0],
+            id: doc._id,
+            title: doc.Title,
+            image: `doc.ImageUrl`,
+            author: doc.Director?.Name?,
           };
         });
 
