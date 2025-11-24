@@ -16,7 +16,7 @@ export const MainView = () => {
             id: doc._id,
             title: doc.Title,
             image: `doc.ImageUrl`,
-            author: doc.Director?.Name?,
+            author: doc.Director?.Name,
           };
         });
 
