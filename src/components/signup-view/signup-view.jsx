@@ -62,7 +62,7 @@ const handleSubmit = (event) => {
     Birthday: birthday,
   };
 
-  fetch("SIGNUP_URL", {
+  fetch("https://localhost:8080", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {

@@ -12,7 +12,7 @@ export const LoginView = () => {
             secrete: password,
         };
 
-        fetch("", {
+        fetch("https://localhost:8080", {
             method: "POST",
             body: JSON.stringify(data),
         });
