@@ -6,7 +6,30 @@ export const SignupView = () => {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const handleSubmit = (event) => {};
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday,
+    };
+
+    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/users", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }).then((response) => {
+        if (response.ok) {
+            alert("Signup succesful");
+        } else {
+            alert("Signup failed");
+        }
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
