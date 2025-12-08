@@ -17,7 +17,7 @@ export const MainView = () => {
         const moviesFromApi = data.map((doc) => {
           return {
             id: doc._id,
-            title: doc.title,
+            title: doc.Title,
             image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
             author: doc.author_name?.[0],
           };
