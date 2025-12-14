@@ -1,14 +1,18 @@
 import PropTypes from "prop-types";
+import { Button, Card } from "react-bootstrap";
 
 export const MovieCard = ({ movie, onMovieClick }) => {
   return (
-    <div
-      onClick={() => {
-        onMovieClick(movie);
-      }}
-    >
-      {movie.title}
-    </div>
+    <Card className="h-100">
+      <Card.Img varient="top" src={movie.image} />
+      <Card.Body>
+        <Card.Title>{movie.title}</Card.Title>
+        <Card.Text>{movie.director}</Card.Text>
+        <Button onClick={() => onMovieClick(movie)} varian="link">
+          Open
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
 
@@ -17,7 +21,7 @@ MovieCard.propTypes = {
   movie: PropTypes.shape({
     title: PropTypes.string,
     image: PropTypes.string.isRequired,
-    author: PropTypes.string,
+    director: PropTypes.string,
   }).isRequired,
   onMovieClick: PropTypes.func.isRequired,
 };
