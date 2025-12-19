@@ -3,6 +3,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { ProfileView } from "../profile-view/profile-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -15,7 +16,7 @@ export const MainView = () => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    fetch("https://localhost:8080")
+    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
         const moviesFromApi = data.map((doc) => {
@@ -23,7 +24,9 @@ export const MainView = () => {
             id: doc._id,
             title: doc.Title,
             image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-            author: doc.author_name?.[0],
+            director: doc.Director?.Name || doc.director || '',
+            description: doc.Description || doc.description || '',
+            genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
           };
         });
 
@@ -68,6 +71,32 @@ export const MainView = () => {
                     setUser(user);
                     setToken(token);
                   }}
+                  />
+                </Col>
+              )}
+            </>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <>
+              {!user ? (
+                <Navigate to="/login" replace />
+              ) : (
+                <Col md={8}>
+                  <ProfileView
+                    user={user}
+                    token={token}
+                    movies={movies}
+                    onUserUpdated={(updatedUser) => setUser(updatedUser)}
+                    onLoggedOut={() => {
+                      setUser(null);
+                      setToken(null);
+                      localStorage.removeItem('token');
+                      localStorage.removeItem('user');
+                    }}
                   />
                 </Col>
               )}
