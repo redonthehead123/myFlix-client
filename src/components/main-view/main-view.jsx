@@ -18,8 +18,15 @@ export const MainView = () => {
 
   useEffect(() => {
     fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
-      .then((response) => response.json())
+      .then((response) => {
+        console.log("Response status:", response.status);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
+        console.log("Movies data received:", data);
         const moviesFromApi = data.map((doc) => {
           return {
             id: doc._id,
@@ -31,7 +38,11 @@ export const MainView = () => {
           };
         });
 
+        console.log("Mapped movies:", moviesFromApi);
         setMovies(moviesFromApi);
+      })
+      .catch((error) => {
+        console.error("Error fetching movies:", error);
       });
   }, []);
 
