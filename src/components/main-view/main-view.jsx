@@ -14,6 +14,7 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
@@ -33,6 +34,12 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, []);
+
+  const filteredMovies = filter.trim() === "" 
+    ? movies 
+    : movies.filter((m) =>
+        m.title?.toLowerCase().includes(filter.trim().toLowerCase())
+      );
 
   return (
     <BrowserRouter>
@@ -131,11 +138,26 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
-                    {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard movie={movie} />
-                      </Col>
-                    ))}
+                    <Col md={8} className="mb-3">
+                      <input
+                        type="text"
+                        placeholder="Filter movies by title..."
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                        className="form-control"
+                      />
+                    </Col>
+                    {filteredMovies.length === 0 ? (
+                      <Col>No movies match your filter.</Col>
+                    ) : (
+                      <>
+                        {filteredMovies.map((movie) => (
+                          <Col className="mb-4" key={movie.id} md={3}>
+                            <MovieCard movie={movie} />
+                          </Col>
+                        ))}
+                      </>
+                    )}
                   </>
                 )}
               </>
