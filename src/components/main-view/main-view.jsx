@@ -12,9 +12,11 @@ export const MainView = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [filter, setFilter] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://localhost:8080")
+    const apiUrl = `${window.location.protocol}//localhost:8080/movies`; 
+    fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
         const moviesFromApi = data.map((doc) => {
@@ -27,6 +29,11 @@ export const MainView = () => {
         });
 
         setMovies(moviesFromApi);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch movies:", err);
+        setLoading(false);
       });
   }, []);
 
@@ -53,6 +60,10 @@ export const MainView = () => {
             onBackClick={() => setSelectedMovie(null)}
           />
         </Col>
+      ) : movies.length === 0 && loading ? (
+        <div>Loading movies...</div>
+      ) : movies.length === 0 && !loading ? (
+        <div>The list is empty</div>
       ) : (
         <>
           <Col md={8} className="mb-3">
