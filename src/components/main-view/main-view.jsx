@@ -49,8 +49,8 @@ export const MainView = () => {
           setUser(null);
         }}
       />
-    <Row className="justify-content-md-center">
-      <Routes>
+      <Row className="justify-content-md-center">
+        <Routes>
         <Route
           path="/signup"
           element={
