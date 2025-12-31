@@ -11,6 +11,7 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     fetch("https://localhost:8080")
@@ -28,6 +29,10 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, []);
+
+  const filteredMovies = movies.filter((m) =>
+    m.title?.toLowerCase().includes(filter.trim().toLowerCase())
+  );
 
   return (
     <Row className="justify-content-md-center">
@@ -48,20 +53,33 @@ export const MainView = () => {
             onBackClick={() => setSelectedMovie(null)}
           />
         </Col>
-      ) : movies.length === 0 ? (
-        <div>The list is empty</div>
       ) : (
         <>
-          {movies.map((movie) => (
-            <Col className="mb-4" key={movie.id} md={3}>
-              <MovieCard
-                movie={movie}
-                onMovieClick={(newSelectedMovie) => {
-                  setSelectedMovie(newSelectedMovie);
-                }}
-              />
-            </Col>
-          ))}
+          <Col md={8} className="mb-3">
+            <input
+              type="text"
+              placeholder="Filter movies by title..."
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="form-control"
+            />
+          </Col>
+          {filteredMovies.length === 0 ? (
+            <div>No movies match your filter.</div>
+          ) : (
+            <>
+              {filteredMovies.map((movie) => (
+                <Col className="mb-4" key={movie.id} md={3}>
+                  <MovieCard
+                    movie={movie}
+                    onMovieClick={(newSelectedMovie) => {
+                      setSelectedMovie(newSelectedMovie);
+                    }}
+                  />
+                </Col>
+              ))}
+            </>
+          )}
         </>
       )}
     </Row>
