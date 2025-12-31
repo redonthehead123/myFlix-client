@@ -17,15 +17,9 @@ export const MainView = () => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    fetch("https://cloud.mongodb.com/v2/68e0eb9813815444fb9122d4#/explorer/68e10eea967deb2ba890c09c/myFlixDB/movies/find")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
+    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
+      .then((response) => response.json())
       .then((data) => {
-        console.log("Fetched movies:", data);
         const moviesFromApi = data.map((doc) => {
           return {
             id: doc._id,
@@ -38,9 +32,6 @@ export const MainView = () => {
         });
 
         setMovies(moviesFromApi);
-      })
-      .catch((error) => {
-        console.error("Error fetching movies:", error);
       });
   }, []);
 
