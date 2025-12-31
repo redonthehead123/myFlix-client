@@ -17,7 +17,7 @@ export const MainView = () => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
+    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/")
       .then((response) => response.json())
       .then((data) => {
         const moviesFromApi = data.map((doc) => {

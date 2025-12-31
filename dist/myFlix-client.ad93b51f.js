@@ -19753,7 +19753,7 @@ const MainView = ()=>{
     const [token, setToken] = (0, _react.useState)(null);
     const [filter, setFilter] = (0, _react.useState)("");
     (0, _react.useEffect)(()=>{
-        fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies").then((response)=>response.json()).then((data)=>{
+        fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/").then((response)=>response.json()).then((data)=>{
             const moviesFromApi = data.map((doc)=>{
                 return {
                     id: doc._id,
