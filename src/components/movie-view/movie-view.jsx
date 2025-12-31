@@ -1,6 +1,6 @@
 import "./movie-view.scss";
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movie, onBackClick, isFavorite = false, onToggleFavorite, user }) => {
   return (
     <div>
       <div>
@@ -31,4 +31,22 @@ export const MovieView = ({ movie, onBackClick }) => {
       </button>
     </div>
   );
+};
+
+import PropTypes from 'prop-types';
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    _id: PropTypes.string,
+    id: PropTypes.string,
+    title: PropTypes.string,
+    image: PropTypes.string,
+    description: PropTypes.string,
+    genre: PropTypes.string,
+    director: PropTypes.string,
+  }).isRequired,
+  onBackClick: PropTypes.func,
+  isFavorite: PropTypes.bool,
+  onToggleFavorite: PropTypes.func,
+  user: PropTypes.object,
 };

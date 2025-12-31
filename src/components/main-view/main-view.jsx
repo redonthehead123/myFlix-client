@@ -3,20 +3,20 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { ProfileView } from "../profile-view/profile-view";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [filter, setFilter] = useState("");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const apiUrl = `${window.location.protocol}//localhost:8080/movies`; 
-    fetch(apiUrl)
+    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
         const moviesFromApi = data.map((doc) => {
@@ -24,75 +24,125 @@ export const MainView = () => {
             id: doc._id,
             title: doc.Title,
             image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-            author: doc.author_name?.[0],
+            director: doc.Director?.Name || doc.director || '',
+            description: doc.Description || doc.description || '',
+            genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
           };
         });
 
         setMovies(moviesFromApi);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch movies:", err);
-        setLoading(false);
       });
   }, []);
 
-  const filteredMovies = movies.filter((m) =>
-    m.title?.toLowerCase().includes(filter.trim().toLowerCase())
-  );
-
   return (
+    <BrowserRouter>
+      <NavigationBar
+        user={user}
+        onLoggedOut={() => {
+          setUser(null);
+        }}
+      />
     <Row className="justify-content-md-center">
-      {!user ? (
-        <Col md={5}>
-          <LoginView onLoggedIn={(user, token) => {
-            setUser(user);
-            setToken(token);
-            }}
-          />
-          or
-          <SignupView />
-        </Col>
-      ) : selectedMovie ? (
-        <Col md={8}>
-          <MovieView
-            movie={selectedMovie}
-            onBackClick={() => setSelectedMovie(null)}
-          />
-        </Col>
-      ) : movies.length === 0 && loading ? (
-        <div>Loading movies...</div>
-      ) : movies.length === 0 && !loading ? (
-        <div>The list is empty</div>
-      ) : (
-        <>
-          <Col md={8} className="mb-3">
-            <input
-              type="text"
-              placeholder="Filter movies by title..."
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="form-control"
-            />
-          </Col>
-          {filteredMovies.length === 0 ? (
-            <div>No movies match your filter.</div>
-          ) : (
+      <Routes>
+        <Route
+          path="/signup"
+          element={
             <>
-              {filteredMovies.map((movie) => (
-                <Col className="mb-4" key={movie.id} md={3}>
-                  <MovieCard
-                    movie={movie}
-                    onMovieClick={(newSelectedMovie) => {
-                      setSelectedMovie(newSelectedMovie);
+              {user ? (
+                <Navigate to="/" />
+              ) : (
+                <Col md={5}>
+                  <SignupView />
+                </Col>
+              )}
+            </>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={
+            <>
+              {user ? (
+                <Navigate to="/" />
+              ) : (
+                <Col md={5}>
+                  <LoginView onLoggedIn={(user, token) => {
+                    setUser(user);
+                    setToken(token);
+                  }}
+                  />
+                </Col>
+              )}
+            </>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <>
+              {!user ? (
+                <Navigate to="/login" replace />
+              ) : (
+                <Col md={8}>
+                  <ProfileView
+                    user={user}
+                    token={token}
+                    movies={movies}
+                    onUserUpdated={(updatedUser) => setUser(updatedUser)}
+                    onLoggedOut={() => {
+                      setUser(null);
+                      setToken(null);
+                      localStorage.removeItem('token');
+                      localStorage.removeItem('user');
                     }}
                   />
                 </Col>
-              ))}
+              )}
             </>
-          )}
-        </>
-      )}
-    </Row>
+          }
+        />
+
+        <Route
+            path="/movies/:movieId"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <Col md={8}>
+                    <MovieView movies={movies} />
+                  </Col>
+                )}
+              </>
+            }
+          />
+
+          <Route
+            path="/"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <>
+                    {movies.map((movie) => (
+                      <Col className="mb-4" key={movie.id} md={3}>
+                        <MovieCard movie={movie} />
+                      </Col>
+                    ))}
+                  </>
+                )}
+              </>
+            }
+          />
+        </Routes>
+      </Row>
+    </BrowserRouter>
   );
 };
