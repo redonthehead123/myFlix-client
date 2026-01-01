@@ -18,15 +18,9 @@ export const MainView = () => {
 
   useEffect(() => {
     fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error ${response.status}`);
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        const movieArray = Array.isArray(data) ? data : [];
-        const moviesFromApi = movieArray.map((doc) => {
+        const moviesFromApi = data.map((doc) => {
           return {
             id: doc._id,
             title: doc.Title,
@@ -38,10 +32,6 @@ export const MainView = () => {
         });
 
         setMovies(moviesFromApi);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch movies", err);
-        setMovies([]);
       });
   }, []);
 
