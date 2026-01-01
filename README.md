@@ -45,7 +45,7 @@ A React-based single-page application (SPA) for browsing movies, managing user p
 Start the development server with Parcel:
 
 ```bash
-npx parcel src/index.html
+parcel src/index.html
 ```
 
 The app will be available at `http://localhost:1234` by default.
@@ -129,14 +129,6 @@ The project includes a `netlify.toml` configuration file for easy deployment to 
 - **No Tests:** Test scripts are not currently configured. Add Jest or React Testing Library if needed.
 - **Authentication Persistence:** Tokens are stored in `localStorage` for session persistence.
 - **CORS:** Ensure your API allows requests from your client's origin (`http://localhost:1234` for development, and your Netlify URL for production).
-
-## Contributing
-
-This is a student project from the CareerFoundry Full-Stack Immersion course. If you'd like to suggest improvements, feel free to open an issue or submit a pull request.
-
-## License
-
-ISC
 
 ## Links
 
