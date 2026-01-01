@@ -120,8 +120,8 @@ export const MainView = () => {
           localStorage.removeItem("token");
         }}
       />
-    <Row className="justify-content-md-center">
-      <Routes>
+      <Row className="justify-content-md-center">
+        <Routes>
         <Route
           path="/signup"
           element={
