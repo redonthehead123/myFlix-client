@@ -19753,7 +19753,7 @@ const MainView = ()=>{
     const [token, setToken] = (0, _react.useState)(null);
     const [filter, setFilter] = (0, _react.useState)("");
     (0, _react.useEffect)(()=>{
-        fetch("https://cloud.mongodb.com/v2/68e0eb9813815444fb9122d4#/explorer/68e10eea967deb2ba890c09c/myFlixDB/movies/find").then((response)=>{
+        fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies").then((response)=>{
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.json();
         }).then((data)=>{

@@ -17,7 +17,7 @@ export const MainView = () => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    fetch("https://cloud.mongodb.com/v2/68e0eb9813815444fb9122d4#/explorer/68e10eea967deb2ba890c09c/myFlixDB/movies/find")
+    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
