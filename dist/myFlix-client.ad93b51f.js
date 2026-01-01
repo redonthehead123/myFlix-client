@@ -19990,12 +19990,12 @@ const MainView = ()=>{
                 }, void 0, true, {
                     fileName: "src/components/main-view/main-view.jsx",
                     lineNumber: 53,
-                    columnNumber: 9
+                    columnNumber: 7
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
                 lineNumber: 52,
-                columnNumber: 7
+                columnNumber: 5
             }, undefined)
         ]
     }, void 0, true, {
