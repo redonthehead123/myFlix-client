@@ -1,14 +1,15 @@
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-export const MovieCard = ({ movie, onMovieClick, isFavorite = false, onToggleFavorite, user }) => {
+export const MovieCard = ({ movie, isFavorite = false, onToggleFavorite, user }) => {
   return (
     <Card className="h-100">
-      <Card.Img varient="top" src={movie.image} />
+      <Card.Img variant="top" src={movie.image} />
       <Card.Body>
         <Card.Title>{movie.title}</Card.Title>
         <Card.Text>{movie.director}</Card.Text>
-        <Button onClick={() => onMovieClick(movie)} variant="link">
+        <Button as={Link} to={`/movies/${movie.id}`} variant="button">
           Open
         </Button>
 
@@ -31,7 +32,9 @@ MovieCard.propTypes = {
   movie: PropTypes.shape({
     title: PropTypes.string,
     image: PropTypes.string,
-or: PropTypes.string,
+    director: PropTypes.string,
   }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
+  isFavorite: PropTypes.bool,
+  onToggleFavorite: PropTypes.func,
+  user: PropTypes.object,
 };
