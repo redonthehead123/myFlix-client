@@ -20,7 +20,7 @@ export const MovieCard = ({ movie, isFavorite = false, onToggleFavorite, user })
         </Button>
 
         <Button
-          onClick={() => onToggleFavorite && onToggleFavorite(movie)}
+          onClick={() => onToggleFavorite?.(movie)}
           variant={isFavorite ? 'warning' : 'outline-secondary'}
           aria-pressed={isFavorite}
           disabled={!user}

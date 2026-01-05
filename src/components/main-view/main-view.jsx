@@ -11,7 +11,6 @@ import { BrowserRouter, Routes, Route, Navigate, useParams, useNavigate } from "
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [filter, setFilter] = useState("");
@@ -32,16 +31,13 @@ export const MainView = () => {
   useEffect(() => {
     fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies-with-posters")
       .then((response) => {
-        console.log("Response status:", response.status);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Movies data received:", data);
         const moviesFromApi = data.map((doc) => {
-          console.log(`Movie: ${doc.Title}, posterUrl: ${doc.posterUrl}`);
           return {
             id: doc._id,
             title: doc.Title,
@@ -52,7 +48,6 @@ export const MainView = () => {
           };
         });
 
-        console.log("Mapped movies:", moviesFromApi);
         setMovies(moviesFromApi);
       })
       .catch((error) => {

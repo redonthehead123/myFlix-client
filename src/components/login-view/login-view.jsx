@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export const LoginView = ({onLoggedIn}) => {
@@ -22,7 +21,6 @@ export const LoginView = ({onLoggedIn}) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Login response : ", data);
                 if (data.user) {
                     localStorage.setItem("user", JSON.stringify(data.user));
                     localStorage.setItem("token", data.token);
@@ -32,7 +30,7 @@ export const LoginView = ({onLoggedIn}) => {
                 }
             })
             .catch((error) => {
-                console.log(error)
+                console.error("Login error:", error);
             alert("Something went wrong");
             });
     };
