@@ -41,10 +41,12 @@ export const MainView = () => {
       .then((data) => {
         console.log("Movies data received:", data);
         const moviesFromApi = data.map((doc) => {
+          console.log("Full movie doc:", doc);
+          console.log("Available keys:", Object.keys(doc));
           return {
             id: doc._id,
             title: doc.Title,
-            image: `https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/${doc.imageURL}`,
+            image: doc.ImageURL || doc.imageURL || doc.ImageUrl || doc.imageUrl || doc.image_url || doc.Image,
             director: doc.Director?.Name || doc.director || '',
             description: doc.Description || doc.description || '',
             genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
