@@ -6,17 +6,10 @@ export const MovieCard = ({ movie, isFavorite = false, onToggleFavorite, user })
   return (
     <Card className="h-100">
       {movie.image ? (
-        <Card.Img 
-          variant="top" 
-          src={movie.image}
-          alt={movie.title}
-          onError={(e) => {
-            console.error("Card image failed to load:", movie.image);
-          }}
-        />
+        <Card.Img variant="top" src={movie.image} alt={movie.title} />
       ) : (
         <div style={{ height: "200px", backgroundColor: "#ccc", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          No image
+          No poster available
         </div>
       )}
       <Card.Body>

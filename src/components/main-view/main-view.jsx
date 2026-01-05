@@ -30,7 +30,7 @@ export const MainView = () => {
   }, []);
 
   useEffect(() => {
-    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies")
+    fetch("https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/movies-with-posters")
       .then((response) => {
         console.log("Response status:", response.status);
         if (!response.ok) {
@@ -40,18 +40,12 @@ export const MainView = () => {
       })
       .then((data) => {
         console.log("Movies data received:", data);
-        const API_BASE_URL = "https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com";
         const moviesFromApi = data.map((doc) => {
-          let imageUrl = doc.ImageUrl || doc.image || doc.Image || '';
-          // If imageUrl is just a filename (not a full URL), construct the full URL
-          if (imageUrl && !imageUrl.startsWith('http')) {
-            imageUrl = `${API_BASE_URL}/public/${imageUrl}`;
-          }
-          console.log("Mapping movie:", doc.Title, "Image URL:", imageUrl);
+          console.log(`Movie: ${doc.Title}, posterUrl: ${doc.posterUrl}`);
           return {
             id: doc._id,
             title: doc.Title,
-            image: imageUrl,
+            image: doc.posterUrl || '',
             director: doc.Director?.Name || doc.director || '',
             description: doc.Description || doc.description || '',
             genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
