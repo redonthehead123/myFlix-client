@@ -39,19 +39,18 @@ export const MainView = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Movies data received:", data);
         const moviesFromApi = data.map((doc) => {
           return {
             id: doc._id,
             title: doc.Title,
-            image: doc.ImageUrl ? `https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/${doc.ImageUrl}` : 'https://via.placeholder.com/300x450?text=No+Image',
-            director: doc.Director?.Name || doc.director || '',
-            description: doc.Description || doc.description || '',
-            genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
+            image: doc.ImageUrl 
+              ? `https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/${doc.ImageUrl}` 
+              : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="450"%3E%3Crect fill="%23ddd" width="300" height="450"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%23999" text-anchor="middle" dy=".3em"%3ENo Image%3C/text%3E%3C/svg%3E',
+            director: doc.Director?.Name || '',
+            description: doc.Description || '',
+            genre: doc.Genre?.Name || ''
           };
         });
-
-        console.log("Mapped movies:", moviesFromApi);
         setMovies(moviesFromApi);
       })
       .catch((error) => {
