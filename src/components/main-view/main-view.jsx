@@ -40,9 +40,14 @@ export const MainView = () => {
       })
       .then((data) => {
         console.log("Movies data received:", data);
+        const API_BASE_URL = "https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com";
         const moviesFromApi = data.map((doc) => {
-          const imageUrl = doc.ImageUrl || doc.image || doc.Image || '';
-          console.log("Mapping movie:", doc.Title, "Image field:", imageUrl);
+          let imageUrl = doc.ImageUrl || doc.image || doc.Image || '';
+          // If imageUrl is just a filename (not a full URL), construct the full URL
+          if (imageUrl && !imageUrl.startsWith('http')) {
+            imageUrl = `${API_BASE_URL}/public/${imageUrl}`;
+          }
+          console.log("Mapping movie:", doc.Title, "Image URL:", imageUrl);
           return {
             id: doc._id,
             title: doc.Title,
