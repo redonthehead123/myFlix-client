@@ -41,16 +41,10 @@ export const MainView = () => {
       .then((data) => {
         console.log("Movies data received:", data);
         const moviesFromApi = data.map((doc) => {
-          console.log("ImageURL value:", doc.ImageURL);
-          console.log("ImageURL type:", typeof doc.ImageURL);
-          const imageUrl = doc.ImageURL 
-            ? `https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/${doc.ImageURL}`
-            : 'https://via.placeholder.com/300x450?text=No+Image';
-          console.log("Constructed image URL:", imageUrl);
           return {
             id: doc._id,
             title: doc.Title,
-            image: imageUrl,
+            image: `https://covers.openlibrary.org/b/id/${doc.ImageUrl}-L.jpg`,
             director: doc.Director?.Name || doc.director || '',
             description: doc.Description || doc.description || '',
             genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
