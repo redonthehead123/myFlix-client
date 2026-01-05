@@ -4,7 +4,21 @@ export const MovieView = ({ movie, onBackClick, isFavorite = false, onToggleFavo
   return (
     <div>
       <div>
-        <img className="w-100" src={movie.image} />
+        {movie.image ? (
+          <img 
+            className="w-100" 
+            src={movie.image} 
+            alt={movie.title}
+            onError={(e) => {
+              console.error("Image failed to load:", movie.image);
+              e.target.style.display = "none";
+            }}
+          />
+        ) : (
+          <div style={{ width: "100%", backgroundColor: "#ccc", padding: "20px", textAlign: "center" }}>
+            No image available
+          </div>
+        )}
       </div>
       <div>
         <span>Title: </span>
