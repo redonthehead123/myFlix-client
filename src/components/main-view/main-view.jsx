@@ -44,7 +44,7 @@ export const MainView = () => {
           return {
             id: doc._id,
             title: doc.Title,
-            image: `https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/${doc.ImageURL}`,
+            image: `https://covers.openlibrary.org/b/id/${doc.ImageURL}`,
             director: doc.Director?.Name || doc.director || '',
             description: doc.Description || doc.description || '',
             genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
