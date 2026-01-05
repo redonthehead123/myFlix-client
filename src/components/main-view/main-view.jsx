@@ -41,6 +41,7 @@ export const MainView = () => {
       .then((data) => {
         console.log("Movies data received:", data);
         const moviesFromApi = data.map((doc) => {
+          console.log("ImageURL:", doc.ImageURL);
           return {
             id: doc._id,
             title: doc.Title,
