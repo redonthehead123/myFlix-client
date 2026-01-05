@@ -5,15 +5,7 @@ import { Link } from "react-router-dom";
 export const MovieCard = ({ movie, isFavorite = false, onToggleFavorite, user }) => {
   return (
     <Card className="h-100">
-      <Card.Img 
-        variant="top" 
-        src={movie.image}
-        onError={(e) => {
-          console.error("Image failed to load:", movie.image);
-          e.target.alt = "Image not available";
-        }}
-        style={{ minHeight: "200px", objectFit: "cover" }}
-      />
+      <Card.Img variant="top" src={movie.image} />
       <Card.Body>
         <Card.Title>{movie.title}</Card.Title>
         <Card.Text>{movie.director}</Card.Text>
