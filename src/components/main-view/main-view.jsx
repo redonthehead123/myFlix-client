@@ -41,10 +41,12 @@ export const MainView = () => {
       .then((data) => {
         console.log("Movies data received:", data);
         const moviesFromApi = data.map((doc) => {
+          const imageUrl = doc.ImageUrl || doc.image || doc.Image || '';
+          console.log("Mapping movie:", doc.Title, "Image field:", imageUrl);
           return {
             id: doc._id,
             title: doc.Title,
-            image: doc.ImageUrl,
+            image: imageUrl,
             director: doc.Director?.Name || doc.director || '',
             description: doc.Description || doc.description || '',
             genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
