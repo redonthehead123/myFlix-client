@@ -44,7 +44,7 @@ export const MainView = () => {
           return {
             id: doc._id,
             title: doc.Title,
-            image: `https://covers.openlibrary.org/b/id/${doc.ImageUrl}`,
+            image: doc.ImageUrl,
             director: doc.Director?.Name || doc.director || '',
             description: doc.Description || doc.description || '',
             genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
