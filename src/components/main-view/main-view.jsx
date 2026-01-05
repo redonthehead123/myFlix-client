@@ -40,11 +40,16 @@ export const MainView = () => {
       })
       .then((data) => {
         console.log("Movies data received:", data);
+        console.log("First movie:", data[0]);
         const moviesFromApi = data.map((doc) => {
+          const imageValue = doc.ImageUrl || doc.ImageURL || '';
+          console.log("Image value for", doc.Title, ":", imageValue, "type:", typeof imageValue);
           return {
             id: doc._id,
             title: doc.Title,
-            image: doc.ImageUrl ? `https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/${doc.ImageUrl}` : 'https://via.placeholder.com/300x450?text=No+Image',
+            image: typeof imageValue === 'string' && imageValue 
+              ? `https://big-beautiful-movie-c7f24c55b7b8.herokuapp.com/${imageValue}` 
+              : 'https://via.placeholder.com/300x450?text=No+Image',
             director: doc.Director?.Name || doc.director || '',
             description: doc.Description || doc.description || '',
             genre: doc.Genre?.Name || (doc.genre && doc.genre.Name) || ''
